@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentRotationX = 20; 
         currentRotationY = -45; 
         cube.style.transform = `rotateX(${currentRotationX}deg) rotateY(${currentRotationY}deg)`;
-        cube.style.transition = 'transform 0s'; // Disable CSS transition during drag
+        cube.style.transition = 'transform 0s'; 
 
         // Function to apply the rotation
         function applyCubeRotation() {
@@ -30,11 +30,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Helper function to get correct coordinates for both mouse and touch events
         function getCoords(e) {
-            // Check if it's a touch event and use the first touch point
             if (e.touches && e.touches.length) {
                 return { x: e.touches[0].clientX, y: e.touches[0].clientY };
             }
-            // Otherwise, it's a mouse event
             return { x: e.clientX, y: e.clientY };
         }
         
@@ -43,16 +41,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Function to start the drag operation
         function startDrag(e) {
             isDragging = true;
-            totalMovement = 0; // Reset movement tracker
+            totalMovement = 0; 
             const coords = getCoords(e);
             startX = coords.x;
             startY = coords.y;
-            cube.style.transition = 'transform 0s'; // Disable CSS transition during drag
+            cube.style.transition = 'transform 0s';
             scene.style.cursor = 'grabbing';
-            // Prevent default for mouse events immediately
-            if (e.type === 'mousedown') {
-                e.preventDefault(); 
-            }
+            
+            // For both mouse and touch, prevent default behavior immediately.
+            // This is crucial for preventing page scroll on touch, and we will manually trigger
+            // the link click in endDrag if it was a tap.
+            e.preventDefault(); 
         }
 
         // Function to handle movement and rotation
@@ -60,25 +59,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isDragging) return;
 
             const coords = getCoords(e);
-            const deltaX = coords.x - startX;
-            const deltaY = coords.y - startY;
+            
+            // Calculate movement from initial start point
+            const movedX = coords.x - startX;
+            const movedY = coords.y - startY;
 
-            // Calculate total movement distance
-            totalMovement += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-            // If a drag is definitely happening (past threshold), prevent default scrolling/tapping
-            if (totalMovement > CLICK_THRESHOLD) {
-                e.preventDefault();
-            }
+            // Update total movement distance based on distance moved in THIS frame
+            totalMovement += Math.sqrt(movedX * movedX + movedY * movedY);
 
             const rotationSpeed = 0.5; 
 
             // Horizontal movement controls Y-axis rotation (spin)
-            currentRotationY += deltaX * rotationSpeed;
+            currentRotationY += movedX * rotationSpeed;
             // Vertical movement controls X-axis rotation (tilt)
-            currentRotationX -= deltaY * rotationSpeed;
+            currentRotationX -= movedY * rotationSpeed;
 
-            // Clamp X rotation to prevent flipping the view too much
+            // Clamp X rotation 
             currentRotationX = Math.max(-90, Math.min(90, currentRotationX));
 
             applyCubeRotation();
@@ -92,12 +88,29 @@ document.addEventListener('DOMContentLoaded', function() {
         function endDrag(e) {
             if (isDragging) {
                 isDragging = false;
-                scene.style.cursor = 'grab'; // Restore pointer/grab cursor style
-                cube.style.transition = 'transform 0.6s ease-in-out'; // Re-enable transition 
+                scene.style.cursor = 'grab'; 
+                cube.style.transition = 'transform 0.6s ease-in-out'; 
 
-                // If total movement was large (a drag), prevent the default link action
-                if (totalMovement > CLICK_THRESHOLD) {
-                    e.preventDefault(); 
+                // Check if the movement was less than the click threshold
+                if (totalMovement < CLICK_THRESHOLD) {
+                    // It was a tap/click, not a drag.
+                    
+                    // The element that was originally touched/clicked
+                    // We need to find the specific <a> tag face that was tapped.
+                    // Use a slight delay to ensure the event phase is complete if needed,
+                    // but for a robust solution, we use the element that was *under* the touch.
+                    
+                    // Use elementFromPoint to find the element at the location of the touch/mouse release
+                    const coords = e.changedTouches ? { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY } : { x: e.clientX, y: e.clientY };
+                    const tappedElement = document.elementFromPoint(coords.x, coords.y);
+                    
+                    // Find the closest ancestor link (the 'face' a tag)
+                    const linkElement = tappedElement.closest('.face');
+
+                    if (linkElement && linkElement.href) {
+                        // Manually navigate to the link's target
+                        window.location.href = linkElement.href;
+                    }
                 }
             }
         }
@@ -114,50 +127,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     } // End if (cube) check
 
-    // --- MODAL 1: Submission Modal Functionality (Minor change for robustness) ---
-    
+    // --- MODAL 1: Submission Modal Functionality (No Change) ---
+    // (This section should be included as before to keep the file complete)
     const submissionModal = document.getElementById("submissionModal");
     const startMissionBtn = document.getElementById("startMissionBtn");
     const closeBtn = submissionModal ? submissionModal.querySelector(".close-btn") : null;
     const agentTags = document.querySelectorAll(".agent-tag");
     const submissionForm = submissionModal ? submissionModal.querySelector('form') : null;
 
-    // Function to open the submission modal
     if (startMissionBtn && submissionModal) {
         startMissionBtn.onclick = function() {
             submissionModal.style.display = "flex";
         }
     }
 
-    // Function to close the submission modal using 'X'
     if (closeBtn) {
         closeBtn.onclick = function() {
             submissionModal.style.display = "none";
         }
     }
 
-    // Toggle 'selected' class on agent buttons
     agentTags.forEach(tag => {
         tag.addEventListener('click', function() {
             this.classList.toggle('selected');
         });
     });
     
-    // Basic form submission handling (prevents page refresh)
     if (submissionForm && submissionModal) {
         submissionForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simple Confirmation Alert (For demo purposes)
             alert('Data Transmitted! (In a real site, this would send data to a server.)');
             
-            // Reset form and close
             submissionForm.reset();
             agentTags.forEach(tag => tag.classList.remove('selected'));
             submissionModal.style.display = "none";
         });
 
-        // Fallback: Close the Submission Modal when clicking its backdrop
         submissionModal.addEventListener('click', function(event) {
             if (event.target.classList.contains('modal-backdrop')) {
                 submissionModal.style.display = "none";
