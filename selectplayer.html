@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SELECT PLAYER | AI FOR EVERYONE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-header">
+        <h1 class="page-title">SELECT PLAYER</h1>
+        <a href="index.html" class="back-home-btn">← RETURN HOME</a>
+    </div>
+
+    <div class="full-page-container">
+        <h2 class="content-section-title player-title">
+            ACCESS_PROFILE_DATABASE
+        </h2>
+        <p class="section-subtitle">
+            Select the profile that best matches your mission criteria.
+        </p>
+
+        <div class="player-card-interactive cyan" data-player="KuttyMakers">
+            <span class="card-number">01</span>
+            <span class="card-level">LVL 1</span>
+            <h3 class="card-name">KUTTY_MAKERS</h3>
+            <p class="card-tagline">Ages 10-17. Focus on foundational logic, curiosity, and safe tool usage.</p>
+            
+            <span class="card-tools-header">TACTICS & WEAPONRY:</span>
+            <div class="tools-list">
+                <span class="tool-tag">Scratch</span>
+                <span class="tool-tag">Teachable Machine</span>
+                <span class="tool-tag">Logic Games</span>
+                <span class="tool-tag">Pattern Recognition</span>
+            </div>
+        </div>
+
+        <div class="player-card-interactive purple" data-player="YoungMakers">
+            <span class="card-number">02</span>
+            <span class="card-level">LVL 2 • PRO</span>
+            <h3 class="card-name">YOUNG_MAKERS</h3>
+            <p class="card-tagline">College/Professionals. Focus on GenAI development, Hackathons, and advanced model usage.</p>
+            
+            <span class="card-tools-header">TACTICS & WEAPONRY:</span>
+            <div class="tools-list">
+                <span class="tool-tag">LLMs</span>
+                <span class="tool-tag">Generative AI</span>
+                <span class="tool-tag">Python</span>
+                <span class="tool-tag">Model Training</span>
+            </div>
+        </div>
+
+        <div class="player-card-interactive green" data-player="FriendsNetwork">
+            <span class="card-number">03</span>
+            <span class="card-level">LVL 3 • COMMUNITY</span>
+            <h3 class="card-name">FRIENDS_NETWORK</h3>
+            <p class="card-tagline">General public. Focus on safety, deepfake awareness, and responsible digital citizenship.</p>
+            
+            <span class="card-tools-header">TACTICS & WEAPONRY:</span>
+            <div class="tools-list">
+                <span class="tool-tag">Deepfake Detection</span>
+                <span class="tool-tag">Privacy Tools</span>
+                <span class="tool-tag">Learning Circles</span>
+                <span class="tool-tag">Public Discussions</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playerCards = document.querySelectorAll('.player-card-interactive');
+            
+            playerCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 1. Remove 'selected' from all cards
+                    playerCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // 2. Add 'selected' to the clicked card
+                    this.classList.add('selected');
+
+                    // 3. Provide feedback
+                    const playerName = this.querySelector('.card-name').textContent;
+                    alert(`PLAYER PROFILE CONFIRMED: ${playerName}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

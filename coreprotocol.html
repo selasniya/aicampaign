@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE PROTOCOL | AI FOR EVERYONE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page-header">
+        <h1 class="page-title">CORE PROTOCOL</h1>
+        <a href="index.html" class="back-home-btn">← RETURN HOME</a>
+    </div>
+
+    <div class="full-page-container">
+        
+        <h2 class="content-section-title protocol-title">
+            PROTOCOL: 3-AXIS ALIGNMENT
+        </h2>
+        <p class="section-subtitle">
+            The foundation for ethical and competent AI integration. (Click steps to validate)
+        </p>
+
+        <div class="data-card">
+            <div class="protocol-step" data-id="head">
+                <span class="protocol-icon">🧠</span>
+                <div>
+                    <h3 class="diag-header">AXIS 1: HEAD</h3>
+                    <p class="diag-message-text">
+                        Understand the underlying algorithms, biases, and ethical implications of AI.
+                    </p>
+                </div>
+            </div>
+            <p style="text-align: right; color: var(--color-primary);">[ KNOWLEDGE & ETHICS ]</p>
+        </div>
+
+        <div class="data-card">
+            <div class="protocol-step" data-id="hand">
+                <span class="protocol-icon" style="background-color: var(--color-accent);">🛠️</span>
+                <div>
+                    <h3 class="diag-header">AXIS 2: HAND</h3>
+                    <p class="diag-message-text">
+                        Utilize AI tools to build projects, innovate, and solve real-world problems.
+                    </p>
+                </div>
+            </div>
+            <p style="text-align: right; color: var(--color-accent);">[ CREATION & APPLICATION ]</p>
+        </div>
+
+        <div class="data-card">
+            <div class="protocol-step" data-id="heart">
+                <span class="protocol-icon" style="background-color: var(--color-green);">❤️</span>
+                <div>
+                    <h3 class="diag-header">AXIS 3: HEART</h3>
+                    <p class="diag-message-text">
+                        Foster community, mentor peers, and promote responsible, safe technology usage.
+                    </p>
+                </div>
+            </div>
+            <p style="text-align: right; color: var(--color-green);">[ RESPONSIBILITY & SHARING ]</p>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const protocolSteps = document.querySelectorAll('.protocol-step');
+
+            protocolSteps.forEach(step => {
+                step.addEventListener('click', function() {
+                    // Toggle the 'complete' class to show/hide the checkmark
+                    this.classList.toggle('complete');
+                    
+                    // Simple check to confirm the action
+                    if (this.classList.contains('complete')) {
+                        console.log(`Protocol step ${this.dataset.id} validated.`);
+                    } else {
+                        console.log(`Protocol step ${this.dataset.id} revoked.`);
+                    }
+
+                    // Optional: Check if all are complete and show a final alert
+                    const completedSteps = document.querySelectorAll('.protocol-step.complete').length;
+                    if (completedSteps === protocolSteps.length) {
+                        setTimeout(() => { 
+                            alert('PROTOCOL COMPLETE: 3-AXIS ALIGNMENT ACHIEVED!'); 
+                        }, 200);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
