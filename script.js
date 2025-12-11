@@ -10,7 +10,7 @@ document.addEventListener('mousemove', (e) => {
 // --- START MISSION MODAL LOGIC (mission_uplink.exe) ---
 const missionModal = document.getElementById('mission-modal');
 const startBtn = document.querySelector('.start-mission-btn');
-const closeBtn = missionModal.querySelector('.close-btn');
+const missionCloseBtn = missionModal.querySelector('.close-btn');
 
 // Open the mission modal
 startBtn.addEventListener('click', () => {
@@ -18,7 +18,7 @@ startBtn.addEventListener('click', () => {
 });
 
 // Close the mission modal via (X)
-closeBtn.addEventListener('click', () => {
+missionCloseBtn.addEventListener('click', () => {
     missionModal.style.display = 'none';
 });
 
