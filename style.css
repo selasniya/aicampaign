@@ -1,892 +1,722 @@
-/* Import a basic Google Font (Roboto used as a placeholder) */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+/* --- UPDATED FONT IMPORTS --- */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=Roboto+Mono:wght@400;700&display=swap');
 
-/* --- 0: MOUSE GLOW --- */
-#mouse-glow {
+:root {
+    --bg-dark: #000000; /* Deep Black */
+    --color-primary: #FF0077; /* Main Pink - Primary Accent */
+    --color-accent: #00FFFF; /* Cyan/Blue - Secondary Accent */
+    --color-text: #FFFFFF; /* White - Standard Text */
+    --color-border: #4a4e69; /* Gray/Blue - Subtle Borders */
+    
+    /* NEW FONT VARIABLES */
+    --font-primary: 'Exo 2', sans-serif; /* Titles and Headings */
+    --font-mono: 'Roboto Mono', monospace; /* Data, Code, and Body Text */
+    
+    /* NEW COLORS for Modals and Status */
+    --color-purple: #5d00ff; /* Deep purple for Young Makers */
+    --color-green: #00CC66; /* Bright green for Friends / Completion */
+    
+    /* Define cube size for precise positioning */
+    --cube-size: 200px; 
+    --control-offset: 200px; 
+}
+
+/* --- KEYFRAME ANIMATIONS --- */
+
+/* Keyframes for the continuous pulsating glow (Mission Button) */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 0, 119, 0.5), 0 0 10px rgba(255, 0, 119, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px var(--color-primary), 0 0 25px rgba(255, 0, 119, 0.7);
+    }
+}
+
+/* Keyframes for the flicker/glitch effect on hover (Buttons) */
+@keyframes dataFlicker {
+    0%, 100% { transform: scale(1); text-shadow: none; }
+    20%, 80% { 
+        transform: scale(1.01) skewX(0.5deg); 
+        text-shadow: 1px 0px var(--color-accent), -1px 0px var(--color-primary); 
+    }
+    40%, 60% { 
+        transform: scale(1.01) skewX(-0.5deg); 
+        text-shadow: 0.5px 0px var(--color-primary), -0.5px 0px var(--color-accent); 
+    }
+}
+
+/* Keyframes for the card query/flash effect on hover (Cards) */
+@keyframes accentFlash {
+    0% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); }
+    50% { box-shadow: 0 0 15px var(--color-accent), 0 0 10px rgba(0, 255, 255, 0.5); }
+    100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+}
+
+
+/* --- BASE STYLES --- */
+body {
+    font-family: var(--font-mono), sans-serif; 
+    background-color: var(--bg-dark); 
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    position: relative; 
+}
+
+/* CANVAS STYLES FOR THE INTERACTIVE BACKGROUND */
+#neonCanvas {
     position: fixed;
     top: 0;
     left: 0;
-    width: 500px; /* Size of the glow effect */
-    height: 500px; /* Size of the glow effect */
-    background: radial-gradient(circle at center, rgba(127, 0, 255, 0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none; /* Crucial: ensures the glow doesn't block clicks */
-    z-index: -1; /* Place it behind all content */
-    transform: translate(-50%, -50%); /* Centers the element on the mouse coordinates */
-    transition: transform 0.1s linear; /* Smooth movement slightly */
+    width: 100%;
+    height: 100%;
+    z-index: -2; 
+    pointer-events: none; 
 }
 
 
-/* --- 1: GLOBAL RESETS AND BACKGROUND --- */
-body {
-    background-color: #0d0c1d; /* Very dark background color */
-    color: #ffffff; /* Default text color */
-    font-family: 'Roboto', sans-serif; /* Adjust font later for tech feel */
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    text-align: center; /* Center content like in the screenshots */
-    
-    /* Simulate the subtle background grid/star pattern */
-    background-image: radial-gradient(#202050 0.5px, transparent 0.5px),
-                      radial-gradient(#202050 0.5px, #0d0c1d 0.5px);
-    background-size: 50px 50px;
-    background-position: 0 0, 25px 25px;
+/* --- HERO SECTION STYLING --- */
+.hero-container {
+    padding: 60px 20px 40px;
+    text-align: center;
+    max-width: 600px;
 }
-
-.container {
-    max-width: 1000px; /* Adjust as needed */
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Base transition for hover effects */
-.diagnostic-card, 
-.protocol-card, 
-.command-card, 
-.audience-card,
-.partner-btn {
-    transition: all 0.3s ease; /* Ensures all properties transition smoothly */
-}
-
-
-/* --- 2: SECTION 1: HEADER AND LANDING PAGE STYLES --- */
-.site-header {
-    padding-top: 20px;
-    padding-bottom: 50px;
-}
-
-.logo a {
-    color: #00ffc8; 
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    display: block; 
-    text-align: left; 
-    padding-left: 0;
-}
-
-.landing-content {
-    padding: 100px 0;
-}
-
-.system-update-banner {
-    background-color: #7f00ff; 
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 50px; 
-    display: inline-block; 
+.header-tag {
+    background-color: var(--color-purple); 
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    letter-spacing: 1px;
     margin-bottom: 30px;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 0 10px #7f00ff; 
+    display: inline-block;
+    border: 2px solid white;
 }
-
 .main-title {
-    font-size: 4rem;
+    font-family: var(--font-primary);
+    font-size: 70px;
+    line-height: 1;
+    margin: 0 0 20px 0;
     font-weight: 900;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    letter-spacing: 5px;
 }
-
+.neon-text {
+    color: var(--color-accent);
+}
 .tagline {
-    font-size: 1.2rem;
-    color: #ccc;
+    font-size: 18px;
+    line-height: 1.5;
     margin-bottom: 40px;
 }
-
-.tagline .highlight {
-    color: #fff000; 
-    padding: 5px 8px;
-    background-color: rgba(255, 240, 0, 0.1);
-}
-
-.start-mission-btn {
-    background-color: #ff007f; 
-    color: #ffffff;
-    border: none;
-    padding: 15px 40px;
-    font-size: 1.3rem;
+.highlight {
+    background-color: var(--color-primary); 
+    color: black;
+    padding: 2px 5px;
     font-weight: bold;
-    text-transform: uppercase;
+}
+.mission-btn {
+    font-family: var(--font-primary);
+    background-color: var(--color-primary); 
+    color: white;
+    padding: 15px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border: 3px solid white;
+    border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    /* Continuous Pulse Glow */
+    animation: pulseGlow 3s infinite alternate ease-in-out;
+}
+.mission-btn:hover {
+    transform: translateY(-2px);
+    /* Flicker on Hover */
+    animation: dataFlicker 0.3s infinite alternate;
+}
+
+/* --- CUBE STYLING --- */
+.cube-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    padding: 200px 0; 
+}
+.scene {
+    width: var(--cube-size);
+    height: var(--cube-size);
+    perspective: 1000px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab; 
+}
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(20deg) rotateY(-45deg); 
+    transition: transform 0.6s ease-in-out; 
+}
+.face {
+    font-family: var(--font-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    position: absolute;
+    width: var(--cube-size);
+    height: var(--cube-size);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--color-primary); 
+    background: var(--bg-dark); 
+    border: 2px solid var(--color-primary); 
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1) inset, 0 0 5px rgba(255, 255, 255, 0.2); 
+    opacity: 1; 
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    word-wrap: break-word; 
+    padding: 10px;
+    box-sizing: border-box;
+    line-height: 1.2; 
+}
+.face:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: var(--color-accent); 
+    color: var(--color-accent);
+}
+.front  { transform: rotateY(0deg) translateZ(calc(var(--cube-size) / 2)); }
+.back   { transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2)); }
+.right  { transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2)); }
+.left   { transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2)); }
+.top    { transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2)); }
+.bottom { transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2)); }
+
+/* --- PARTNER WITH US SECTION --- */
+.partner-section {
+    padding: 20px 20px 80px;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+    margin-top: 50px; 
+}
+.partner-title {
+    font-family: var(--font-primary);
+    color: var(--color-accent);
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+.partner-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+.partner-btn {
+    font-family: var(--font-mono);
+    background-color: transparent;
+    color: var(--color-text);
+    padding: 10px 15px;
+    border: 2px solid var(--color-border);
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+}
+.partner-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+    /* Flicker on Hover for Partner Buttons */
+    animation: dataFlicker 0.2s infinite alternate;
+}
+.credits {
+    font-size: 14px;
+    color: #AAA;
+    margin-bottom: 20px;
+}
+.highlight-purple {
+    color: var(--color-purple);
+    font-weight: bold;
+}
+.log-btn {
+    font-family: var(--font-mono);
+    background-color: transparent;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.log-btn:hover {
+    /* Flicker on Hover for Log Button */
+    animation: dataFlicker 0.2s infinite alternate;
+}
+
+/* --- SUBMISSION MODAL (No Change) --- */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background-color: var(--bg-dark);
+    width: 90%;
+    max-width: 500px;
+    border: 5px solid var(--color-accent); 
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 30px var(--color-accent); 
+}
+.modal-header {
+    background-color: #1a2a3a; 
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--color-border);
+}
+.window-title {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: white;
+}
+.close-btn {
+    color: var(--color-primary); 
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+.close-btn:hover {
+    color: var(--color-text);
+}
+.modal-body {
+    padding: 20px;
+}
+.prompt-text {
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.modal-body label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: var(--color-primary); 
+    font-family: var(--font-mono);
+}
+.modal-body input[type="text"],
+.modal-body input[type="url"] {
+    width: 95%;
+    padding: 10px;
+    background: #0b1522; 
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    border-radius: 3px;
+}
+.agent-label {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+}
+.agents-used-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.agent-tag {
+    background-color: #2a3d52; 
+    color: var(--color-text);
+    padding: 8px 12px;
+    border: 1px solid #4a4e69;
     border-radius: 5px;
-    box-shadow: 0 0 20px #ff007f; 
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    transition: background-color 0.2s, border-color 0.2s;
 }
-
-.start-mission-btn:hover {
-    transform: scale(1.05); /* Subtle lift */
-    background-color: #ff3399;
-    box-shadow: 0 0 30px #ff007f, 0 0 50px #ff007f; /* Stronger, pulsating glow */
+.agent-tag:hover {
+    background-color: #3b5066;
 }
-
-
-/* --- 3: SECTION 2: SYSTEM DIAGNOSTICS STYLES --- */
-.system-diagnostics {
-    padding: 80px 0;
+.agent-tag.selected {
+    background-color: var(--color-primary); 
+    color: black;
+    border-color: white;
+    font-weight: bold;
 }
-
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 50px;
-    color: #fff;
-    letter-spacing: 3px;
+.transmit-btn {
+    font-family: var(--font-primary);
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: var(--color-green); 
+    color: var(--bg-dark);
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
-
-.warning-icon {
-    color: #ff007f; 
-    font-size: 1.8rem;
-    vertical-align: middle;
+.transmit-btn:hover {
+    background-color: #00FF00; 
+}
+.transmit-icon {
     margin-right: 10px;
 }
 
-.card-grid {
-    display: flex;
-    flex-direction: column; 
-    gap: 20px; 
-    align-items: center; 
-}
+/* ================================================= */
+/* --- NEW FULL-PAGE STYLES FOR CUBE CONTENT --- */
+/* ================================================= */
 
-.diagnostic-card {
-    background-color: #1a1a2e; 
+.full-page-container {
     width: 100%;
-    max-width: 450px; 
-    padding: 25px 30px;
-    text-align: left;
-    border: 1px solid #333; /* Default for hover comparison */
-    border-left: 5px solid; /* Defined per card below */
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
-}
-
-.diagnostic-card:hover {
-    border-color: #00ffc8; 
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.6), 0 0 5px rgba(0, 255, 200, 0.4) inset; 
-    transform: translateY(-3px); 
-}
-
-.diagnostic-card h3 {
-    margin-top: 5px;
-    margin-bottom: 10px;
-    color: #fff;
-    font-size: 1.5rem;
-}
-
-.diagnostic-card p {
-    color: #ccc;
-    font-size: 1rem;
-    margin: 0;
-}
-
-.card-code {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-/* Setting different border colors and code colors for each diagnostic card */
-#card-01 { border-left-color: #ff007f; } /* Pink */
-#card-01 .card-code { color: #ff007f; } 
-
-#card-02 { border-left-color: #fff000; } /* Yellow */
-#card-02 .card-code { color: #fff000; } 
-
-#card-03 { border-left-color: #00ffc8; } /* Teal */
-#card-03 .card-code { color: #00ffc8; }
-
-
-/* --- 4: SECTION 3: CORE PROTOCOL STYLES --- */
-.core-protocol {
-    padding: 80px 0;
-    margin: 40px auto;
-    max-width: 500px;
-    border: 1px solid rgba(0, 255, 200, 0.3); 
-    box-shadow: 0 0 25px rgba(0, 255, 200, 0.1);
-    border-radius: 10px;
-}
-
-.core-protocol .section-title {
-    background-color: #0d0c1d; 
-    display: inline-block;
-    padding: 0 15px;
-    margin-top: -40px; 
-}
-
-.protocol-icon {
-    color: #fff000; 
-}
-
-.protocol-cards {
-    gap: 15px;
-    padding: 20px;
-}
-
-.protocol-card {
-    background-color: #1a1a2e; 
-    width: 100%;
-    max-width: 400px; 
-    padding: 20px 30px;
-    text-align: left;
-    position: relative;
-    border: 1px solid #333; 
-    border-radius: 5px;
-}
-
-.protocol-card:hover {
-    border-color: #00ffc8; 
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.6), 0 0 5px rgba(0, 255, 200, 0.4) inset; 
-    transform: translateY(-3px); 
-}
-
-.protocol-icon-box {
-    float: left;
-    margin-right: 15px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-
-.protocol-card h4 {
-    margin: 5px 0;
-    font-size: 1.5rem;
-}
-
-/* Color Accents for Protocol Cards */
-.protocol-pink .protocol-icon-box { background-color: #ff007f; }
-.protocol-yellow .protocol-icon-box { background-color: #fff000; }
-.protocol-yellow h4, .protocol-yellow p { color: #fff000; } 
-.protocol-green .protocol-icon-box { background-color: #00ffc8; }
-.protocol-cyan .protocol-icon-box { background-color: #007bff; }
-
-
-/* --- 5: SECTION 4: SELECT AUDIENCE STYLES --- */
-.select-audience {
-    padding: 50px 0 80px;
-}
-
-.select-audience .section-title {
-    margin-bottom: 50px;
-    text-transform: uppercase;
-}
-
-.audience-cards-grid {
-    display: flex;
-    flex-direction: column; 
-    gap: 10px;
-    align-items: center;
-}
-
-.audience-card {
-    background-color: #1a1a2e;
-    width: 100%;
-    max-width: 450px;
-    padding: 20px;
-    text-align: left;
-    border: 1px solid #333;
-    border-radius: 5px;
-    cursor: pointer; /* Indicate clickability for modal */
-}
-
-/* Base hover effect defined above, but repeated here for clarity on what is targeted */
-.audience-card:not(.highlighted-audience):hover {
-    border-color: #00ffc8; 
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.6), 0 0 5px rgba(0, 255, 200, 0.4) inset; 
-    transform: translateY(-3px); 
-}
-
-.audience-card h4 {
-    font-size: 1.5rem;
-    margin: 0 0 5px 0;
-}
-
-.audience-card p {
-    font-size: 0.9rem;
-    color: #ccc;
-    margin: 0;
-}
-
-.highlighted-audience {
-    background-color: #7f00ff; 
-    border-color: #ff007f; 
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.4);
-    position: relative;
-    padding-bottom: 70px; 
-}
-
-.highlighted-audience .join-btn {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ff007f; 
-    color: white;
-    padding: 15px 0;
-    border: none;
-    font-weight: bold;
-    font-size: 1.1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-.audience-description {
     max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    border: 1px dashed #333;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-
-/* --- 6: SECTION 5: COMMAND CENTER STYLES --- */
-.command-center {
-    padding: 80px 0;
-}
-
-.command-center .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-}
-
-.command-grid {
-    display: flex;
-    flex-direction: column; 
-    gap: 15px;
-    align-items: center;
-}
-
-.command-card {
-    display: flex;
-    align-items: center;
-    text-align: left;
-    text-decoration: none; 
-    color: inherit;
-    background-color: #1a1a2e;
-    width: 100%;
-    max-width: 450px;
-    padding: 15px 25px;
-    border: 1px solid #333;
-    border-radius: 5px;
-}
-
-.command-card:hover {
-    background-color: #2a2a4e; 
-    border-color: #00ffc8; 
-    box-shadow: 0 0 15px rgba(0, 255, 200, 0.6), 0 0 5px rgba(0, 255, 200, 0.4) inset; 
-    transform: translateY(-3px);
-}
-
-.card-icon {
-    font-size: 1.8rem;
-    margin-right: 20px;
-}
-
-.card-info {
-    flex-grow: 1; 
-}
-
-.card-info h4 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: #fff;
-    font-weight: 700;
-}
-
-.card-info p {
-    margin: 2px 0 0 0;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-.card-arrow {
-    font-size: 1.5rem;
-    color: #00ffc8; 
-}
-
-.open-ports-card {
-    text-align: center;
-    padding: 30px 25px;
-    border: 1px solid #7f00ff; 
-    box-shadow: 0 0 15px rgba(127, 0, 255, 0.3);
-    flex-direction: column;
-}
-
-.open-ports-card .card-info { text-align: center; }
-.open-ports-card .card-icon { margin: 0 0 10px 0; }
-.open-ports-card .card-arrow { display: none; }
-
-
-/* --- 7: SECTION 6: PARTNER WITH US / FOOTER STYLES --- */
-.site-footer {
-    padding: 60px 0 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); 
-}
-
-.partner-title {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-}
-
-.partner-buttons {
-    display: flex;
-    flex-direction: column; 
-    gap: 15px;
-    align-items: center;
-    margin-bottom: 50px;
-}
-
-.partner-btn {
-    display: block; 
-    width: 100%;
-    max-width: 450px; 
-    padding: 15px 20px;
-    background: transparent;
-    border: 1px solid #fff; 
-    color: #fff;
-    text-decoration: none;
-    font-size: 1.1rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.partner-btn:hover {
-    background-color: #ff007f; 
-    border-color: #ff007f;
-    box-shadow: 0 0 10px rgba(255, 0, 127, 0.5);
-}
-
-.attribution {
-    padding-top: 20px;
-    font-size: 0.9rem;
-    color: #ccc;
-}
-
-.attribution p {
-    margin-bottom: 10px;
-}
-
-.source-log-btn {
-    background: transparent;
-    border: 1px solid #444;
-    color: #00ffc8; 
-    padding: 8px 15px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.source-log-btn:hover {
-    background-color: #00ffc8;
-    color: #0d0c1d; 
-}
-
-
-/* --- 8: MODAL BASE STYLES --- */
-.modal {
-    display: none; 
-    position: fixed;
-    z-index: 1000; 
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.9); 
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    position: relative; /* For absolute positioning of close button */
-    animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-50px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.close-btn {
-    color: #fff000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    line-height: 1;
-}
-
-/* --- 9: MISSION UPLINK MODAL STYLES --- */
-.mission-uplink-window {
-    background-color: #0b1a2f; 
-    margin: 10% auto; 
-    padding: 0; 
-    border: 3px solid #00ffc8; 
-    width: 90%;
-    max-width: 600px; 
-    box-shadow: 0 0 30px rgba(0, 255, 200, 0.7); 
-    border-radius: 5px;
-    overflow: hidden; 
-}
-
-.mission-uplink-window .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 15px;
-    color: white;
-    font-size: 20px;
-    z-index: 1001;
-}
-
-.window-title-bar {
-    display: flex;
-    align-items: center;
-    background-color: #000000; 
-    padding: 8px 15px;
-    border-bottom: 1px solid #00ffc8;
-}
-
-.traffic-lights {
-    display: flex;
-    gap: 5px;
-    margin-right: auto;
-}
-
-.traffic-lights .dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-}
-.traffic-lights .red { background-color: #ff5f56; }
-.traffic-lights .yellow { background-color: #ffbd2e; }
-.traffic-lights .green { background-color: #27c93f; }
-
-.window-title {
-    color: #00ffc8; 
-    font-size: 0.9rem;
-    font-family: monospace;
-    margin: 0;
-}
-
-.uplink-form {
-    padding: 20px 40px 40px 40px;
-    text-align: left;
-}
-
-.form-title {
-    color: #fff;
-    font-size: 2rem;
-    margin: 20px 0 30px 0;
-}
-
-.uplink-form label {
-    display: block;
-    color: #00ffc8; 
-    font-size: 0.9rem;
-    margin-top: 15px;
-    margin-bottom: 5px;
-}
-
-.uplink-form input[type="text"],
-.uplink-form input[type="url"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #000000; 
-    border: 1px solid #00ffc8; 
-    color: #fff;
-    font-size: 1rem;
+    margin-top: 0;
+    padding: 0 20px 60px;
     box-sizing: border-box;
 }
-
-.agent-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.agent-tags input[type="checkbox"] {
-    display: none; 
-}
-
-.agent-tags label {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #1a1a2e; 
-    border: 1px solid #444;
-    color: #ccc;
-    cursor: pointer;
-    border-radius: 3px;
-    margin: 0; 
-    transition: all 0.2s;
-}
-
-.agent-tags input[type="checkbox"]:checked + label {
-    background-color: #00ffc8; 
-    color: #0b1a2f; 
-    border-color: #00ffc8;
-    box-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
-}
-
-.transmit-btn {
+.page-header {
     width: 100%;
-    margin-top: 40px;
-    background-color: #00ffc8; 
-    color: #0b1a2f; 
-    border: none;
-    padding: 15px 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 3px;
-    box-shadow: 0 0 20px rgba(0, 255, 200, 0.8);
-    transition: all 0.3s;
+    max-width: 600px;
+    background-color: #1a2a3a;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--color-primary);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
-
-.transmit-btn:hover {
-    background-color: #00ff99;
-    box-shadow: 0 0 30px rgba(0, 255, 200, 1);
+.page-title {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    color: var(--color-accent);
+    margin: 0;
 }
-
-/* --- 10: PLAYER PROFILE MODAL STYLES --- */
-.player-card-content {
-    background-color: #002244; 
-    margin: 5% auto; 
-    padding: 0; 
-    border: 3px solid #00ffc8; 
-    width: 90%;
-    max-width: 700px; 
-    box-shadow: 0 0 30px rgba(0, 255, 200, 0.5); 
+.back-home-btn {
+    font-family: var(--font-primary);
+    text-decoration: none;
+    color: var(--color-text);
+    background-color: var(--color-primary);
+    padding: 8px 15px;
     border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+.back-home-btn:hover {
+    background-color: #FF4081;
+}
+
+/* --- Shared Content Styles --- */
+.content-section-title {
+    font-family: var(--font-primary);
+    font-size: 36px;
+    font-weight: 900;
+    text-align: center;
+    margin: 40px 0 30px;
+    text-transform: uppercase;
+}
+.section-subtitle {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    text-align: center;
+    color: #AAA;
+    margin-bottom: 40px;
+}
+.data-card {
+    background-color: #1a2a3a;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.2s, background-color 0.2s;
+}
+.data-card:hover {
+    background-color: #132030;
+    transform: translateY(-2px);
+    /* Data Card Flash on Hover */
+    animation: accentFlash 0.3s forwards; 
+}
+
+/* --- 1. Diagnostics Styles (No additional CSS interactivity needed) --- */
+.diagnostics-title {
+    color: var(--color-primary);
+}
+.diagnostic-item {
+    border-left: 5px solid;
+    padding-left: 15px;
+    margin-bottom: 15px;
+}
+.status-critical { border-color: var(--color-primary); }
+.status-warning { border-color: #FFA500; }
+.diag-header {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.diag-message-text {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: #CCC;
+}
+
+/* --- 2. Core Protocol Styles (Interactive Completion, Progress Bar CSS REMOVED) --- */
+.protocol-title {
+    color: var(--color-accent);
+}
+.protocol-step {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px dashed var(--color-border);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    cursor: pointer;
     overflow: hidden;
 }
-
-.player-card-content .profile-close-btn {
-    position: absolute;
-    top: 5px;
-    right: 15px;
-    color: white;
-    font-size: 20px;
-    z-index: 1001;
-}
-
-.profile-header {
-    padding: 30px;
-    padding-bottom: 50px;
-    color: #000;
-    text-align: left;
-    /* Tiled background pattern */
-    background-image: repeating-linear-gradient(
-        45deg, 
-        rgba(0,0,0,0.1) 0, 
-        rgba(0,0,0,0.1) 5px, 
-        transparent 5px, 
-        transparent 10px
-    );
-}
-
-.profile-header h3 {
-    font-size: 4rem;
-    margin: 0 0 10px 0;
-    font-weight: 900;
+.protocol-icon {
+    font-size: 30px;
+    margin-right: 20px;
+    background-color: var(--color-primary);
+    color: var(--bg-dark);
+    padding: 8px;
+    border-radius: 50%;
     line-height: 1;
 }
 
-.profile-header .age-range {
-    font-size: 1.5rem;
+/* Protocol Completion State */
+.protocol-step.complete {
+    background-color: rgba(0, 204, 102, 0.1); 
+    border-left: 5px solid var(--color-green);
+}
+.protocol-step.complete .protocol-icon {
+    background-color: var(--color-green) !important;
+    color: var(--bg-dark);
+}
+/* Checkmark Overlay */
+.protocol-step::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%) scale(0);
+    opacity: 0;
+    font-size: 30px;
+    color: var(--color-green);
+    transition: transform 0.3s, opacity 0.3s;
+    font-family: sans-serif; 
+}
+.protocol-step.complete::after {
+    content: '✓'; /* Unicode checkmark */
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+}
+/* Note: All progress bar CSS (protocol-status-display, progress-bar-fill, etc.) has been removed */
+
+
+/* --- 3. Global Model Styles (No additional CSS interactivity needed) --- */
+.global-model-title {
+    color: var(--color-accent);
+}
+.model-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    text-align: center;
+}
+.stat-box-page {
+    background-color: #0b1522;
+    padding: 15px 5px;
+    border-radius: 5px;
+    border-top: 3px solid var(--color-accent);
+}
+.stat-value-page {
+    font-size: 24px;
     font-weight: bold;
-    padding: 5px 10px;
-    background-color: #000;
-    color: inherit; /* Inherits main header color */
-    display: inline-block;
+    display: block;
+    color: var(--color-primary);
 }
-
-.profile-body {
-    background-color: #000; 
-    padding: 40px 30px;
-    text-align: left;
-    color: #00ffc8; 
-    font-family: monospace;
-    font-size: 1.1rem;
-}
-
-.profile-body h4 {
-    color: #fff;
-    font-size: 1.3rem;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 5px;
+.stat-label-page {
+    font-size: 10px;
     text-transform: uppercase;
+    color: #AAA;
+}
+.model-quote {
+    margin-top: 30px;
+    border-left: 5px solid var(--color-primary);
+    padding-left: 15px;
+    font-style: italic;
+    font-size: 16px;
 }
 
-.weaponry-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+/* --- 4. Select Player Styles (Interactive Selection) --- */
+.player-title {
+    color: var(--color-purple);
 }
-
-.weaponry-tags .tool-tag {
-    background-color: #00c0ff;
-    color: #000;
-    padding: 8px 15px;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.encrypt-section {
-    background-color: #000;
-    padding: 10px 30px 20px 30px;
-    border-top: 1px solid #333;
-}
-
-.encrypt-btn {
-    background: transparent;
-    border: 1px solid #00ffc8;
-    color: #00ffc8;
-    padding: 10px 20px;
-    font-size: 1rem;
+.player-card-interactive {
+    background-color: #1a2a3a;
+    border: 3px solid transparent;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 25px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s, box-shadow 0.3s;
     cursor: pointer;
-    transition: all 0.2s;
+}
+.player-card-interactive.cyan { border-color: var(--color-accent); }
+.player-card-interactive.purple { border-color: var(--color-purple); }
+.player-card-interactive.green { border-color: var(--color-green); }
+
+.player-card-interactive:hover {
+    transform: scale(1.02);
+    animation: accentFlash 0.3s forwards; 
 }
 
-.encrypt-btn:hover {
-    background-color: #00ffc8;
-    color: #0d0c1d;
+/* Persistent "Selected" State */
+.player-card-interactive.selected {
+    border-width: 5px;
+    box-shadow: 0 0 30px var(--color-primary); 
+    background-color: #132030;
+    transform: scale(1.02);
+    /* Overwrite hover effect when selected */
+    animation: none;
 }
 
-/* --- 11: MEDIA QUERIES (MOBILE RESPONSIVENESS) --- */
+.card-number {
+    position: absolute;
+    top: -10px;
+    right: 15px;
+    font-size: 80px;
+    font-family: var(--font-primary);
+    opacity: 0.05;
+}
+.card-level {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: var(--color-primary);
+}
+.card-name {
+    font-family: var(--font-primary);
+    font-size: 28px;
+    margin: 0 0 10px 0;
+}
+.card-tagline {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: #CCC;
+    margin-bottom: 20px;
+}
+.card-tools-header {
+    font-size: 12px;
+    color: var(--color-accent);
+    margin-top: 15px;
+    display: block;
+}
+.tool-tag {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin: 5px 5px 0 0;
+    font-family: var(--font-mono);
+}
+.cyan .card-name { color: var(--color-accent); }
+.purple .card-name { color: var(--color-purple); }
+.green .card-name { color: var(--color-green); }
 
-/* Target screens smaller than 600px (standard phone width) */
-@media (max-width: 600px) {
-    
-    /* --- GENERAL LAYOUT FIXES --- */
-    .container {
-        padding: 0 10px; /* Reduce padding on edges */
-    }
-    
-    .section-title {
-        font-size: 2rem; /* Make section titles smaller */
-        margin-bottom: 30px;
-    }
 
-    /* --- SECTION 1: HEADER & LANDING --- */
-    .main-title {
-        font-size: 2.5rem;
-        letter-spacing: 2px;
-    }
+/* --- 5. Command Center Styles (No additional CSS interactivity needed) --- */
+.command-title {
+    color: var(--color-primary);
+}
+.command-item-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+.command-item {
+    background-color: #0b1522;
+    padding: 20px;
+    border-left: 4px solid var(--color-accent);
+    transition: border-color 0.2s;
+}
+.command-item:hover {
+    border-color: var(--color-primary);
+}
+.command-icon {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+}
+.command-name {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    margin: 0 0 5px 0;
+    color: var(--color-accent);
+}
+.command-desc {
+    font-size: 14px;
+    color: #AAA;
+}
+.launch-game-link {
+    font-family: var(--font-primary);
+    display: block;
+    width: 100%;
+    margin-top: 40px;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.launch-game-link:hover {
+    transform: translateY(-2px);
+    background-color: #e00063 !important;
+}
 
-    .tagline {
-        font-size: 1rem;
-        padding: 0 5px;
-    }
-    
-    .start-mission-btn {
-        padding: 12px 30px;
-        font-size: 1.1rem;
-    }
-
-    /* --- SECTION 2, 3, 4, 5: CARD LAYOUTS --- */
-    /* Ensure all card grids (which are set to flex-direction: column) are centered 
-       and their max-width is sufficient for the screen. (These are mostly fine
-       since they are already stacked, but we adjust padding/size.) */
-
-    .diagnostic-card,
-    .protocol-card,
-    .command-card,
-    .audience-card,
-    .partner-btn {
-        max-width: 100%; /* Take full width of the container */
-        padding: 20px;
-    }
-    
-    /* Fix Protocol card alignment */
-    .protocol-card .protocol-icon-box {
-        float: none; /* Remove float */
-        margin: 0 auto 10px auto; /* Center the icon box above the text */
-        width: 40px;
-        height: 40px;
-    }
-    
-    .protocol-card {
-        text-align: center; /* Center text under the icon */
-    }
-
-    /* --- SECTION 4: AUDIENCE CARDS (JOIN BUTTON FIX) --- */
-    .highlighted-audience {
-        padding-bottom: 50px; /* Reduce padding for smaller screen */
-    }
-
-    .highlighted-audience .join-btn {
-        padding: 12px 0; /* Reduce button height */
-        font-size: 1rem;
-    }
-
-    /* --- SECTION 5: COMMAND CENTER --- */
-    .command-card {
-        flex-direction: column; /* Stack icon and text vertically */
-        text-align: center;
-        padding: 20px 15px;
-    }
-    
-    .command-card .card-icon {
-        margin: 0 0 10px 0; /* Move icon to the top, add bottom margin */
-    }
-    
-    .command-card .card-arrow {
-        display: none; /* Hide the > arrow, as it looks messy when stacked */
-    }
-    
-    .card-info h4 {
-        font-size: 1.1rem;
-    }
-
-    /* --- MODALS (MISSION UPLINK) --- */
-    .mission-uplink-window {
-        margin: 5% auto; /* Shift modal up a little on mobile */
-        width: 95%; 
-    }
-    
-    .uplink-form {
-        padding: 20px;
-    }
-    
-    .agent-tags {
-        justify-content: center; /* Center the checkbox tags */
-    }
-    
-    .agent-tags label {
-        padding: 6px 10px; /* Smaller padding for tags */
-        font-size: 0.8rem;
-    }
-
-    /* --- MODALS (PLAYER PROFILE) --- */
-    .player-card-content {
-        width: 95%;
-    }
-    
-    .profile-header h3 {
-        font-size: 2.5rem; /* Reduce large heading size */
-    }
-    
-    .profile-header .age-range {
-        font-size: 1.2rem;
-    }
-
-    .profile-body {
-        font-size: 1rem;
-        padding: 30px 20px;
-    }
+/* --- Helper Class to hide old modal styles --- */
+.data-modal {
+    display: none !important;
 }
