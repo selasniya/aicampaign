@@ -82,11 +82,11 @@ body {
 }
 
 
-/* --- HERO SECTION STYLING --- */
+/* --- HERO SECTION STYLING (UPDATED MAX-WIDTH) --- */
 .hero-container {
     padding: 60px 20px 40px;
     text-align: center;
-    max-width: 600px;
+    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
 }
 .header-tag {
     background-color: var(--color-purple); 
@@ -101,7 +101,7 @@ body {
 }
 .main-title {
     font-family: var(--font-primary);
-    font-size: 70px;
+    font-size: 80px; /* SLIGHTLY INCREASED FOR WIDER DESKTOP */
     line-height: 1;
     margin: 0 0 20px 0;
     font-weight: 900;
@@ -140,14 +140,14 @@ body {
     animation: dataFlicker 0.3s infinite alternate;
 }
 
-/* --- CUBE STYLING --- */
+/* --- CUBE STYLING (UPDATED MAX-WIDTH) --- */
 .cube-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
     position: relative;
     padding: 200px 0; 
 }
@@ -204,11 +204,11 @@ body {
 .top    { transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2)); }
 .bottom { transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2)); }
 
-/* --- PARTNER WITH US SECTION --- */
+/* --- PARTNER WITH US SECTION (UPDATED MAX-WIDTH) --- */
 .partner-section {
     padding: 20px 20px 80px;
     text-align: center;
-    max-width: 600px;
+    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
     width: 100%;
     margin-top: 50px; 
 }
@@ -395,19 +395,19 @@ body {
 }
 
 /* ================================================= */
-/* --- NEW FULL-PAGE STYLES FOR CUBE CONTENT --- */
+/* --- NEW FULL-PAGE STYLES FOR CUBE CONTENT (UPDATED MAX-WIDTH) --- */
 /* ================================================= */
 
 .full-page-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
     margin-top: 0;
     padding: 0 20px 60px;
     box-sizing: border-box;
 }
 .page-header {
     width: 100%;
-    max-width: 600px;
+    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
     background-color: #1a2a3a;
     padding: 15px 20px;
     display: flex;
@@ -669,7 +669,8 @@ body {
 }
 .command-item-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    /* Changed from 1fr to 2 columns for wider desktop view */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 15px;
 }
 .command-item {
@@ -719,4 +720,45 @@ body {
 /* --- Helper Class to hide old modal styles --- */
 .data-modal {
     display: none !important;
+}
+
+/* --- RESPONSIVENESS (MOBILE OPTIMIZATIONS) --- */
+@media (max-width: 650px) {
+    /* Override cube size variable for a smaller, more mobile-friendly display */
+    :root {
+        --cube-size: 160px; /* Reduced from 200px to 160px for mobile */
+        --control-offset: 160px; 
+    }
+    
+    /* Ensure containers use full width on mobile */
+    .hero-container, .cube-section, .partner-section, .full-page-container, .page-header {
+        max-width: 100%;
+    }
+    
+    /* 1. Adjust Hero Section for better fit on small screens */
+    .hero-container {
+        padding: 40px 15px 20px;
+    }
+
+    .main-title {
+        font-size: 55px; /* Reduced large title size for readability */
+    }
+    
+    /* 2. Fix excessive vertical spacing around the 3D cube */
+    .cube-section {
+        padding: 100px 0; /* Significantly reduced vertical padding from 200px */
+    }
+
+    /* 3. Adjust titles on secondary pages (Diagnostics, Protocol, etc.) */
+    .page-title {
+        font-size: 18px;
+    }
+    .content-section-title {
+        font-size: 30px;
+    }
+    
+    /* 4. Ensure command center items stack nicely on mobile */
+    .command-item-grid {
+        grid-template-columns: 1fr;
+    }
 }
