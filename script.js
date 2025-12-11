@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentRotationY = 0; 
     let currentRotationX = 0; 
 
+    // Variables to track total movement for click detection
+    let totalMovement = 0;
+    const CLICK_THRESHOLD = 5; // Pixels: If movement is less than this, treat as a click
+
     if (cube) {
         // Initialize the cube's starting rotation (matches CSS initial state)
         currentRotationX = 20; 
@@ -39,12 +43,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Function to start the drag operation
         function startDrag(e) {
             isDragging = true;
+            totalMovement = 0; // Reset movement tracker
             const coords = getCoords(e);
             startX = coords.x;
             startY = coords.y;
             cube.style.transition = 'transform 0s'; // Disable CSS transition during drag
             scene.style.cursor = 'grabbing';
-            e.preventDefault(); 
+            // Prevent default for mouse events immediately
+            if (e.type === 'mousedown') {
+                e.preventDefault(); 
+            }
         }
 
         // Function to handle movement and rotation
@@ -54,6 +62,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const coords = getCoords(e);
             const deltaX = coords.x - startX;
             const deltaY = coords.y - startY;
+
+            // Calculate total movement distance
+            totalMovement += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            // If a drag is definitely happening (past threshold), prevent default scrolling/tapping
+            if (totalMovement > CLICK_THRESHOLD) {
+                e.preventDefault();
+            }
 
             const rotationSpeed = 0.5; 
 
@@ -70,40 +86,44 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update start position for the *next* movement calculation
             startX = coords.x;
             startY = coords.y;
-            e.preventDefault(); // Prevent scrolling/default behavior
         }
 
         // Function to end the drag operation
-        function endDrag() {
+        function endDrag(e) {
             if (isDragging) {
                 isDragging = false;
                 scene.style.cursor = 'grab'; // Restore pointer/grab cursor style
                 cube.style.transition = 'transform 0.6s ease-in-out'; // Re-enable transition 
+
+                // If total movement was large (a drag), prevent the default link action
+                if (totalMovement > CLICK_THRESHOLD) {
+                    e.preventDefault(); 
+                }
             }
         }
         
-        // 1. Desktop Events (Original MOUSE logic)
+        // 1. Desktop Events
         scene.addEventListener('mousedown', startDrag);
-        scene.addEventListener('mousemove', handleMove);
+        document.addEventListener('mousemove', handleMove); 
         document.addEventListener('mouseup', endDrag);
 
-        // 2. Mobile Events (New TOUCH logic)
+        // 2. Mobile Events
         scene.addEventListener('touchstart', startDrag);
-        scene.addEventListener('touchmove', handleMove);
+        document.addEventListener('touchmove', handleMove); 
         document.addEventListener('touchend', endDrag);
 
     } // End if (cube) check
 
-    // --- MODAL 1: Submission Modal Functionality (No Change) ---
+    // --- MODAL 1: Submission Modal Functionality (Minor change for robustness) ---
     
     const submissionModal = document.getElementById("submissionModal");
     const startMissionBtn = document.getElementById("startMissionBtn");
-    const closeBtn = submissionModal.querySelector(".close-btn");
+    const closeBtn = submissionModal ? submissionModal.querySelector(".close-btn") : null;
     const agentTags = document.querySelectorAll(".agent-tag");
-    const submissionForm = submissionModal.querySelector('form');
+    const submissionForm = submissionModal ? submissionModal.querySelector('form') : null;
 
     // Function to open the submission modal
-    if (startMissionBtn) {
+    if (startMissionBtn && submissionModal) {
         startMissionBtn.onclick = function() {
             submissionModal.style.display = "flex";
         }
@@ -124,23 +144,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Basic form submission handling (prevents page refresh)
-    submissionForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Simple Confirmation Alert (For demo purposes)
-        alert('Data Transmitted! (In a real site, this would send data to a server.)');
-        
-        // Reset form and close
-        submissionForm.reset();
-        agentTags.forEach(tag => tag.classList.remove('selected'));
-        submissionModal.style.display = "none";
-    });
-
-    // Fallback: Close the Submission Modal when clicking its backdrop
-    submissionModal.addEventListener('click', function(event) {
-        if (event.target.classList.contains('modal-backdrop')) {
+    if (submissionForm && submissionModal) {
+        submissionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple Confirmation Alert (For demo purposes)
+            alert('Data Transmitted! (In a real site, this would send data to a server.)');
+            
+            // Reset form and close
+            submissionForm.reset();
+            agentTags.forEach(tag => tag.classList.remove('selected'));
             submissionModal.style.display = "none";
-        }
-    });
+        });
+
+        // Fallback: Close the Submission Modal when clicking its backdrop
+        submissionModal.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal-backdrop')) {
+                submissionModal.style.display = "none";
+            }
+        });
+    }
 
 });
