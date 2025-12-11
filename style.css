@@ -82,11 +82,11 @@ body {
 }
 
 
-/* --- HERO SECTION STYLING (UPDATED MAX-WIDTH) --- */
+/* --- HERO SECTION STYLING --- */
 .hero-container {
     padding: 60px 20px 40px;
     text-align: center;
-    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
+    max-width: 900px; 
 }
 .header-tag {
     background-color: var(--color-purple); 
@@ -101,7 +101,7 @@ body {
 }
 .main-title {
     font-family: var(--font-primary);
-    font-size: 80px; /* SLIGHTLY INCREASED FOR WIDER DESKTOP */
+    font-size: 100px; /* INCREASED for better desktop presence */
     line-height: 1;
     margin: 0 0 20px 0;
     font-weight: 900;
@@ -140,14 +140,14 @@ body {
     animation: dataFlicker 0.3s infinite alternate;
 }
 
-/* --- CUBE STYLING (UPDATED MAX-WIDTH) --- */
+/* --- CUBE STYLING --- */
 .cube-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
+    max-width: 900px; 
     position: relative;
     padding: 200px 0; 
 }
@@ -204,11 +204,11 @@ body {
 .top    { transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2)); }
 .bottom { transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2)); }
 
-/* --- PARTNER WITH US SECTION (UPDATED MAX-WIDTH) --- */
+/* --- PARTNER WITH US SECTION --- */
 .partner-section {
     padding: 20px 20px 80px;
     text-align: center;
-    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
+    max-width: 900px; 
     width: 100%;
     margin-top: 50px; 
 }
@@ -395,19 +395,19 @@ body {
 }
 
 /* ================================================= */
-/* --- NEW FULL-PAGE STYLES FOR CUBE CONTENT (UPDATED MAX-WIDTH) --- */
+/* --- NEW FULL-PAGE STYLES FOR CUBE CONTENT --- */
 /* ================================================= */
 
 .full-page-container {
     width: 100%;
-    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
+    max-width: 900px; 
     margin-top: 0;
     padding: 0 20px 60px;
     box-sizing: border-box;
 }
 .page-header {
     width: 100%;
-    max-width: 900px; /* INCREASED FOR WIDER DESKTOP */
+    max-width: 900px; 
     background-color: #1a2a3a;
     padding: 15px 20px;
     display: flex;
@@ -472,7 +472,7 @@ body {
     animation: accentFlash 0.3s forwards; 
 }
 
-/* --- 1. Diagnostics Styles (No additional CSS interactivity needed) --- */
+/* --- 1. Diagnostics Styles --- */
 .diagnostics-title {
     color: var(--color-primary);
 }
@@ -494,7 +494,7 @@ body {
     color: #CCC;
 }
 
-/* --- 2. Core Protocol Styles (Interactive Completion, Progress Bar CSS REMOVED) --- */
+/* --- 2. Core Protocol Styles --- */
 .protocol-title {
     color: var(--color-accent);
 }
@@ -545,10 +545,9 @@ body {
     transform: translateY(-50%) scale(1);
     opacity: 1;
 }
-/* Note: All progress bar CSS (protocol-status-display, progress-bar-fill, etc.) has been removed */
 
 
-/* --- 3. Global Model Styles (No additional CSS interactivity needed) --- */
+/* --- 3. Global Model Styles --- */
 .global-model-title {
     color: var(--color-accent);
 }
@@ -583,7 +582,7 @@ body {
     font-size: 16px;
 }
 
-/* --- 4. Select Player Styles (Interactive Selection) --- */
+/* --- 4. Select Player Styles --- */
 .player-title {
     color: var(--color-purple);
 }
@@ -663,13 +662,12 @@ body {
 .green .card-name { color: var(--color-green); }
 
 
-/* --- 5. Command Center Styles (No additional CSS interactivity needed) --- */
+/* --- 5. Command Center Styles --- */
 .command-title {
     color: var(--color-primary);
 }
 .command-item-grid {
     display: grid;
-    /* Changed from 1fr to 2 columns for wider desktop view */
     grid-template-columns: repeat(2, 1fr); 
     gap: 15px;
 }
@@ -759,6 +757,11 @@ body {
     
     /* 4. Ensure command center items stack nicely on mobile */
     .command-item-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 5. Model stats should stack on small screens */
+    .model-stat-grid {
         grid-template-columns: 1fr;
     }
 }
