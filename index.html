@@ -3,275 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Campaign | TH_OS</title>
+    <title>AI FOR EVERYONE - Mission Uplink</title>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="mouse-glow"></div> 
-
-    <header class="site-header">
-        <div class="container">
-            <div class="logo">
-                <a href="#">&gt;_ TH_OS</a>
-            </div>
-
-            <main class="landing-content">
-                <div class="system-update-banner">
-                    <span class="icon">💡</span> SYSTEM UPDATE: KERALA 2.0
-                </div>
-
-                <h1 class="main-title">AI FOR EVERYONE</h1>
-
-                <p class="tagline">
-                    Democratizing AI knowledge across Kerala. <br>
-                    <span class="highlight">Be a Creator</span> not just a Consumer.
-                </p>
-
-                <button class="start-mission-btn">
-                    START MISSION &gt;
-                </button>
-            </main>
-        </div>
-    </header>
-
-    <section class="system-diagnostics">
-        <div class="container">
-            <h2 class="section-title">
-                <span class="warning-icon">⚠️</span> SYSTEM DIAGNOSTICS
-            </h2>
-
-            <div class="card-grid">
-                
-                <div class="diagnostic-card" id="card-01">
-                    <span class="card-code">SKR_01</span>
-                    <h3>SKILL_GAP_CRITICAL</h3>
-                    <p>&gt; Students graduating without future-ready tech skills.</p>
-                </div>
-
-                <div class="diagnostic-card" id="card-02">
-                    <span class="card-code">WRK_02</span>
-                    <h3>WORKFORCE_AUTOMATION</h3>
-                    <p>&gt; AI replacing traditional roles. Freshers at risk.</p>
-                </div>
-
-                <div class="diagnostic-card" id="card-03">
-                    <span class="card-code">SEC_02</span>
-                    <h3>DEEPFAKE THREAT</h3>
-                    <p>&gt; Misinformation & scam targeting elders/communities.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section class="core-protocol">
-        <div class="container">
-            <h2 class="section-title">CORE PROTOCOL <span class="protocol-icon">💡</span></h2>
-
-            <div class="card-grid protocol-cards">
-
-                <div class="protocol-card protocol-pink">
-                    <div class="protocol-icon-box">
-                        <span class="icon-label">TH-OS</span>
-                    </div>
-                    <h4>TH-OS</h4>
-                    <p>Operating System for AI upskilling.</p>
-                </div>
-
-                <div class="protocol-card protocol-yellow">
-                    <div class="protocol-icon-box">
-                        <span class="icon-label">TLMS</span>
-                    </div>
-                    <h4>TLMS</h4>
-                    <p>Tech Learning Management System.</p>
-                </div>
-
-                <div class="protocol-card protocol-green">
-                    <div class="protocol-icon-box">
-                        <span class="icon-label">I-CAST</span>
-                    </div>
-                    <h4>I-CAST</h4>
-                    <p>AI enabled Career Assessment Test.</p>
-                </div>
-
-                <div class="protocol-card protocol-cyan">
-                    <div class="protocol-icon-box">
-                        <span class="icon-label">I-LEAP</span>
-                    </div>
-                    <h4>I-LEAP</h4>
-                    <p>Labs and AI projects for students.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <canvas id="neonCanvas"></canvas>
     
-    <section class="select-audience">
-        <div class="container">
-            <h2 class="section-title text-center">SELECT PLAYER</h2>
-            
-            <div class="audience-cards-grid">
-                
-                <div class="audience-card">
-                    <div class="audience-content">
-                        <h4>KuttyMakers</h4>
-                        <p>Grade 8 - 12 <br> Learn AI basics and robotics.</p>
-                    </div>
-                </div>
+    <section class="hero-container">
+        <div class="header-tag">SYSTEM UPDATE: KERALA 2.0</div>
+        
+        <h1 class="main-title">
+            AI FOR<br>
+            <span class="neon-text">EVERYONE</span>
+        </h1>
 
-                <div class="audience-card highlighted-audience">
-                    <div class="audience-content">
-                        <h4>Young Makers</h4>
-                        <p>College <br> Advanced AI & Web Development.</p>
-                        <button class="join-btn">JOIN</button>
-                    </div>
-                </div>
+        <p class="tagline">
+            Democratizing AI knowledge across Kerala.<br>
+            <span class="highlight">Be a Creator</span> not just a Consumer.
+        </p>
 
-                <div class="audience-card">
-                    <div class="audience-content">
-                        <h4>Friends of Movement</h4>
-                        <p>Professionals <br> Advanced Upskilling and Mentorship.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="audience-description">
-                <p>JOIN OUR NETWORK TO ACCESS AI-POWERED TOOLS AND RESOURCES TAILORED FOR YOUR ROLE AND GOALS.
-                    <br>SELECT YOUR PLAYER PROFILE ABOVE TO START YOUR MISSION.
-                </p>
-            </div>
-        </div>
+        <button id="startMissionBtn" class="mission-btn">
+            START MISSION &gt;
+        </button>
     </section>
 
-    <section class="command-center">
-        <div class="container">
-            <h2 class="section-title">COMMAND CENTER</h2>
-            
-            <div class="command-grid">
+    <section class="cube-section">
+        
+        <div class="scene">
+            <div id="cube" class="cube">
+                <a href="diagnostics.html" class="face front">SYSTEM DIAGNOSTICS</a>
+                <a href="coreprotocol.html" class="face back">CORE PROTOCOL</a>
+                <a href="globalmodel.html" class="face right">GLOBAL MODEL RESPONSIBLE FOR AI</a>
+                <a href="selectplayer.html" class="face left">SELECT PLAYER</a>
+                <a href="commandcenter.html" class="face top">COMMAND CENTER</a>
                 
-                <a href="#" class="command-card">
-                    <div class="card-icon">📚</div>
-                    <div class="card-info">
-                        <h4>READ OUR BLOG</h4>
-                        <p>Latest updates, case studies & insights.</p>
-                    </div>
-                    <div class="card-arrow">&gt;</div>
-                </a>
-
-                <a href="#" class="command-card">
-                    <div class="card-icon">✉️</div>
-                    <div class="card-info">
-                        <h4>CONTACT US</h4>
-                        <p>Get in touch with the core team.</p>
-                    </div>
-                    <div class="card-arrow">&gt;</div>
-                </a>
-
-                <a href="#" class="command-card">
-                    <div class="card-icon">🌐</div>
-                    <div class="card-info">
-                        <h4>SOCIALS</h4>
-                        <p>Follow our journey on social media.</p>
-                    </div>
-                    <div class="card-arrow">&gt;</div>
-                </a>
-
-                <a href="#" class="command-card">
-                    <div class="card-icon">❓</div>
-                    <div class="card-info">
-                        <h4>FAQ</h4>
-                        <p>Frequently Asked Questions.</p>
-                    </div>
-                    <div class="card-arrow">&gt;</div>
-                </a>
-
-                <div class="command-card open-ports-card">
-                    <div class="card-icon">🔒</div>
-                    <div class="card-info">
-                        <h4>OPEN PORTS</h4>
-                        <p>Invite your network to participate.</p>
-                    </div>
-                </div>
-
+                <a href="https://chromedino.com/" target="_blank" class="face bottom">PLAY A GAME</a>
             </div>
         </div>
+
     </section>
 
-    <footer class="site-footer">
-        <div class="container">
-            <h2 class="section-title partner-title">PARTNER WITH US</h2>
-            
-            <div class="partner-buttons">
-                <a href="#" class="partner-btn">KNOWLEDGE PARTNER</a>
-                <a href="#" class="partner-btn">FINANCIAL PARTNER</a>
-                <a href="#" class="partner-btn">MEDIA PARTNER</a>
-                <a href="#" class="partner-btn">COMMUNITY PARTNER</a>
-            </div>
-
-            <div class="attribution">
-                <p>
-                    Powered by **TinkerHub** • Built with AI
-                </p>
-                <button class="source-log-btn">
-                    [ VIEW_SOURCE_LOGS ]
-                </button>
-            </div>
+    <section class="partner-section">
+        <h2 class="partner-title">PARTNER WITH US</h2>
+        
+        <div class="partner-options">
+            <button class="partner-btn">KNOWLEDGE PARTNER</button>
+            <button class="partner-btn">FINANCIAL PARTNER</button>
+            <button class="partner-btn">MEDIA PARTNER</button>
+            <button class="partner-btn">COMMUNITY PARTNER</button>
         </div>
-    </footer>
 
-    <div id="mission-modal" class="modal">
-        <div class="modal-content mission-uplink-window">
-            <span class="close-btn">&times;</span>
-            
-            <div class="window-title-bar">
-                <div class="traffic-lights">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <p class="window-title">mission_uplink.exe</p>
+        <p class="credits">
+            Powered by <span class="highlight-purple">TinkerHub</span> • Built with AI
+        </p>
+
+        <button class="log-btn">[ VIEW_SOURCE_LOGS ]</button>
+    </section>
+
+
+    <div id="submissionModal" class="modal-backdrop" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <span class="window-title">mission_uplink.exe</span>
             </div>
-
-            <h2 class="form-title">&gt;_ INITIATE_SUBMISSION</h2>
-            
-            <form class="uplink-form">
-                <label for="codename">CODENAME (Name)</label>
-                <input type="text" id="codename" placeholder="Enter your name...">
+            <form class="modal-body">
+                <p class="prompt-text">&gt; _ INITIATE_SUBMISSION</p>
+                
+                <label for="name">CODENAME (Name)</label>
+                <input type="text" id="name" placeholder="Enter your name..." required>
 
                 <label for="url">DEPLOYMENT_URL (Project Link)</label>
-                <input type="url" id="url" placeholder="https://vercel.com/...">
+                <input type="url" id="url" placeholder="https://vercel.com/..." required>
 
-                <label>AI_AGENTS_USED</label>
-                <div class="agent-tags">
-                    <input type="checkbox" id="chatgpt" value="chatgpt"><label for="chatgpt">ChatGPT</label>
-                    <input type="checkbox" id="claude" value="claude"><label for="claude">Claude</label>
-                    <input type="checkbox" id="cursor" value="cursor"><label for="cursor">Cursor</label>
-                    <input type="checkbox" id="v0" value="v0"><label for="v0">V0</label>
-                    <input type="checkbox" id="midjourney" value="midjourney"><label for="midjourney">Midjourney</label>
-                    <input type="checkbox" id="gemini" value="gemini"><label for="gemini">Gemini</label>
+                <p class="agent-label">AI_AGENTS_USED</p>
+                <div class="agents-used-group">
+                    <button type="button" class="agent-tag" data-agent="ChatGPT">ChatGPT</button>
+                    <button type="button" class="agent-tag" data-agent="Claude">Claude</button>
+                    <button type="button" class="agent-tag" data-agent="Cursor">Cursor</button>
+                    <button type="button" class="agent-tag" data-agent="v0">v0</button>
+                    <button type="button" class="agent-tag" data-agent="Midjourney">Midjourney</button>
+                    <button type="button" class="agent-tag" data-agent="Gemini">Gemini</button>
                 </div>
-
+                
                 <button type="submit" class="transmit-btn">
-                    <span class="icon">📡</span> TRANSMIT DATA
+                    <span class="transmit-icon">&gt;</span> TRANSMIT DATA
                 </button>
             </form>
-
         </div>
     </div>
 
-    <div id="player-profile-modal" class="modal">
-        <div class="modal-content player-card-content">
-            <span class="close-btn profile-close-btn">&times;</span>
-            
-            <div id="profile-content-area">
-                </div>
-            
-            <div class="encrypt-section">
-                <button class="encrypt-btn">O ENCRYPT FILE</button>
-            </div>
-        </div>
-    </div>
-    
+
+    <script src="canvas-script.js"></script>
     <script src="script.js"></script>
+
 </body>
 </html>
