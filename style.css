@@ -484,7 +484,6 @@ body {
     padding: 8px 15px;
     font-size: 0.8rem;
     cursor: pointer;
-    margin-top: 5px;
     transition: all 0.3s;
 }
 
@@ -765,5 +764,129 @@ body {
 
 .encrypt-btn:hover {
     background-color: #00ffc8;
-    color: #000;
+    color: #0d0c1d;
+}
+
+/* --- 11: MEDIA QUERIES (MOBILE RESPONSIVENESS) --- */
+
+/* Target screens smaller than 600px (standard phone width) */
+@media (max-width: 600px) {
+    
+    /* --- GENERAL LAYOUT FIXES --- */
+    .container {
+        padding: 0 10px; /* Reduce padding on edges */
+    }
+    
+    .section-title {
+        font-size: 2rem; /* Make section titles smaller */
+        margin-bottom: 30px;
+    }
+
+    /* --- SECTION 1: HEADER & LANDING --- */
+    .main-title {
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+    }
+
+    .tagline {
+        font-size: 1rem;
+        padding: 0 5px;
+    }
+    
+    .start-mission-btn {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    /* --- SECTION 2, 3, 4, 5: CARD LAYOUTS --- */
+    /* Ensure all card grids (which are set to flex-direction: column) are centered 
+       and their max-width is sufficient for the screen. (These are mostly fine
+       since they are already stacked, but we adjust padding/size.) */
+
+    .diagnostic-card,
+    .protocol-card,
+    .command-card,
+    .audience-card,
+    .partner-btn {
+        max-width: 100%; /* Take full width of the container */
+        padding: 20px;
+    }
+    
+    /* Fix Protocol card alignment */
+    .protocol-card .protocol-icon-box {
+        float: none; /* Remove float */
+        margin: 0 auto 10px auto; /* Center the icon box above the text */
+        width: 40px;
+        height: 40px;
+    }
+    
+    .protocol-card {
+        text-align: center; /* Center text under the icon */
+    }
+
+    /* --- SECTION 4: AUDIENCE CARDS (JOIN BUTTON FIX) --- */
+    .highlighted-audience {
+        padding-bottom: 50px; /* Reduce padding for smaller screen */
+    }
+
+    .highlighted-audience .join-btn {
+        padding: 12px 0; /* Reduce button height */
+        font-size: 1rem;
+    }
+
+    /* --- SECTION 5: COMMAND CENTER --- */
+    .command-card {
+        flex-direction: column; /* Stack icon and text vertically */
+        text-align: center;
+        padding: 20px 15px;
+    }
+    
+    .command-card .card-icon {
+        margin: 0 0 10px 0; /* Move icon to the top, add bottom margin */
+    }
+    
+    .command-card .card-arrow {
+        display: none; /* Hide the > arrow, as it looks messy when stacked */
+    }
+    
+    .card-info h4 {
+        font-size: 1.1rem;
+    }
+
+    /* --- MODALS (MISSION UPLINK) --- */
+    .mission-uplink-window {
+        margin: 5% auto; /* Shift modal up a little on mobile */
+        width: 95%; 
+    }
+    
+    .uplink-form {
+        padding: 20px;
+    }
+    
+    .agent-tags {
+        justify-content: center; /* Center the checkbox tags */
+    }
+    
+    .agent-tags label {
+        padding: 6px 10px; /* Smaller padding for tags */
+        font-size: 0.8rem;
+    }
+
+    /* --- MODALS (PLAYER PROFILE) --- */
+    .player-card-content {
+        width: 95%;
+    }
+    
+    .profile-header h3 {
+        font-size: 2.5rem; /* Reduce large heading size */
+    }
+    
+    .profile-header .age-range {
+        font-size: 1.2rem;
+    }
+
+    .profile-body {
+        font-size: 1rem;
+        padding: 30px 20px;
+    }
 }
